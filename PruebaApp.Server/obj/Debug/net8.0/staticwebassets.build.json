@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "C7euqoQSEpjJFt6Q9utOblbTH2NPRbfu8eSPtho003c=",
+  "Source": "PruebaApp.Server",
+  "BasePath": "_content/PruebaApp.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
