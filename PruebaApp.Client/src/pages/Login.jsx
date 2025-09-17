@@ -24,31 +24,33 @@ function Login() {
   };
 
   return (
-    <div className="p-6 max-w-sm mx-auto">
-      <h2 className="text-xl font-bold mb-4">Login</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          className="border w-full p-2 rounded"
-          type="text"
-          placeholder="Usuario"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          className="border w-full p-2 rounded"
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white w-full py-2 rounded"
-        >
-          Ingresar
-        </button>
-      </form>
+    <div className="flex items-center justify-center h-[calc(100%-64px)] bg-gray-100">
+      <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
+        <h2 className="text-2xl font-bold text-center mb-6">Iniciar sesión</h2>
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            className="border w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            type="text"
+            placeholder="Usuario"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            className="border w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-blue-500 text-white w-full py-3 rounded-lg hover:bg-blue-600 transition"
+          >
+            Ingresar
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
