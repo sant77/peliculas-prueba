@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function Login() {
+  const { login } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,7 +18,9 @@ function Login() {
     });
 
     if (res.ok) {
-      navigate("/"); // 👈 después del login vuelve al Home
+      const data = await res.json();
+      login(data.token); // Guardar JWT
+      navigate("/"); // Redirigir al Home
     } else {
       const data = await res.json();
       setError(data.message);
