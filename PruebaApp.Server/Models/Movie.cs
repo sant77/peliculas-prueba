@@ -9,14 +9,14 @@ namespace PruebaApp.Server.Models
         public string TrailerCode { get; set; } = "";
 
         public int GenreId { get; set; }
-        public Genre? Genre { get; set; }
+        public Genre Genre { get; set; } = null!;
 
         public int CountryId { get; set; }
-        public Country? Country { get; set; }
+        public Country Country { get; set; } = null!;
 
         public int DirectorId { get; set; }
-        public Director? Director { get; set; }
+        public Director Director { get; set; } = null!;
 
-        public ICollection<Actor>? Actors { get; set; }
+        public ICollection<Actor> Actors { get; set; } = new List<Actor>();
     }
 }

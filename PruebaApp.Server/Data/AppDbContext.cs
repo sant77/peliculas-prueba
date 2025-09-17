@@ -21,6 +21,26 @@ namespace PruebaApp.Server.Data
                 .HasMany(m => m.Actors)
                 .WithMany(a => a.Movies)
                 .UsingEntity(j => j.ToTable("MovieActors"));
+
+            // Evitar cascadas múltiples
+            modelBuilder.Entity<Movie>()
+                .HasOne(m => m.Director)
+                .WithMany(d => d.Movies)
+                .HasForeignKey(m => m.DirectorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Movie>()
+                .HasOne(m => m.Genre)
+                .WithMany(g => g.Movies)
+                .HasForeignKey(m => m.GenreId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Movie>()
+                .HasOne(m => m.Country)
+                .WithMany(c => c.Movies)
+                .HasForeignKey(m => m.CountryId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
+
     }
 }
