@@ -1,0 +1,1 @@
+    docker compose -p movie_page up -d
