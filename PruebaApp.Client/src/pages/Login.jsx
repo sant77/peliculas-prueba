@@ -16,7 +16,7 @@ function Login() {
     });
 
     if (res.ok) {
-      navigate("/home");
+      navigate("/"); // 👈 después del login vuelve al Home
     } else {
       const data = await res.json();
       setError(data.message);
@@ -24,7 +24,7 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center h-[calc(100%-64px)] bg-gray-100">
+    <div className="flex items-center justify-center h-full">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
         <h2 className="text-2xl font-bold text-center mb-6">Iniciar sesión</h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
