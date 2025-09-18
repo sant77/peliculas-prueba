@@ -21,6 +21,8 @@ function Navbar() {
         ) : (
           <>
             <Link className="hover:text-blue-400 transition" to="/directors">Directores</Link>
+            <Link className="hover:text-blue-400 transition" to="/genres">Géneros</Link>
+            <Link className="hover:text-blue-400 transition" to="/countries">Países</Link>
             <button
               onClick={handleLogout}
               className="hover:text-red-400 transition"
