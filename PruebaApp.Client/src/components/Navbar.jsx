@@ -16,16 +16,18 @@ function Navbar() {
       <h1 className="text-lg font-bold">🎬 PruebaApp</h1>
       <div className="flex gap-4">
         <Link className="hover:text-blue-400 transition" to="/">Inicio</Link>
-
         {!token ? (
           <Link className="hover:text-blue-400 transition" to="/login">Login</Link>
         ) : (
-          <button
-            onClick={handleLogout}
-            className="hover:text-red-400 transition"
-          >
-            Cerrar sesión
-          </button>
+          <>
+            <Link className="hover:text-blue-400 transition" to="/directors">Directores</Link>
+            <button
+              onClick={handleLogout}
+              className="hover:text-red-400 transition"
+            >
+              Cerrar sesión
+            </button>
+          </>
         )}
       </div>
     </nav>
