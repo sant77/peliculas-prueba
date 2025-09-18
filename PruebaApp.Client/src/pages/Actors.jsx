@@ -10,7 +10,7 @@ function Actors() {
 
   // Obtener actores
   const fetchActors = async () => {
-    const res = await fetch("http://localhost:5017/api/actors", {
+    const res = await fetch("http://149.102.142.6:5017/api/actors", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -19,7 +19,7 @@ function Actors() {
 
   // Obtener países
   const fetchCountries = async () => {
-    const res = await fetch("http://localhost:5017/api/countries", {
+    const res = await fetch("http://149.102.142.6:5017/api/countries", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -37,8 +37,8 @@ function Actors() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isEditing
-      ? `http://localhost:5017/api/actors/${form.id}`
-      : "http://localhost:5017/api/actors";
+      ? `http://149.102.142.6:5017/api/actors/${form.id}`
+      : "http://149.102.142.6:5017/api/actors";
     const method = isEditing ? "PUT" : "POST";
 
     const res = await fetch(url, {
@@ -64,7 +64,7 @@ function Actors() {
 
   const handleDelete = async (id) => {
     if (!confirm("¿Eliminar este actor?")) return;
-    await fetch(`http://localhost:5017/api/actors/${id}`, {
+    await fetch(`http://149.102.142.6:5017/api/actors/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -8,7 +8,7 @@ function Genres() {
   const [isEditing, setIsEditing] = useState(false);
 
   const fetchGenres = async () => {
-    const res = await fetch("http://localhost:5017/api/genres", {
+    const res = await fetch("http://149.102.142.6:5017/api/genres", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -24,8 +24,8 @@ function Genres() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isEditing
-      ? `http://localhost:5017/api/genres/${form.id}`
-      : "http://localhost:5017/api/genres";
+      ? `http://149.102.142.6:5017/api/genres/${form.id}`
+      : "http://149.102.142.6:5017/api/genres";
     const method = isEditing ? "PUT" : "POST";
 
     const res = await fetch(url, {
@@ -51,7 +51,7 @@ function Genres() {
 
   const handleDelete = async (id) => {
     if (!confirm("¿Eliminar este género?")) return;
-    await fetch(`http://localhost:5017/api/genres/${id}`, {
+    await fetch(`http://149.102.142.6:5017/api/genres/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -8,7 +8,7 @@ function Countries() {
   const [isEditing, setIsEditing] = useState(false);
 
   const fetchCountries = async () => {
-    const res = await fetch("http://localhost:5017/api/countries", {
+    const res = await fetch("http://149.102.142.6:5017/api/countries", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -24,8 +24,8 @@ function Countries() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isEditing
-      ? `http://localhost:5017/api/countries/${form.id}`
-      : "http://localhost:5017/api/countries";
+      ? `http://149.102.142.6:5017/api/countries/${form.id}`
+      : "http://149.102.142.6:5017/api/countries";
     const method = isEditing ? "PUT" : "POST";
 
     const res = await fetch(url, {
@@ -51,7 +51,7 @@ function Countries() {
 
   const handleDelete = async (id) => {
     if (!confirm("¿Eliminar este país?")) return;
-    await fetch(`http://localhost:5017/api/countries/${id}`, {
+    await fetch(`http://149.102.142.6:5017/api/countries/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

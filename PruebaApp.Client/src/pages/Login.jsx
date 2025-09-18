@@ -11,7 +11,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:5017/api/auth/login", {
+    const res = await fetch("http://149.102.142.6:5017/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),

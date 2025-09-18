@@ -26,7 +26,7 @@ function Movies() {
 
   // === API CALLS ===
   const fetchMovies = async () => {
-    const res = await fetch("http://localhost:5017/api/movies", {
+    const res = await fetch("http://149.102.142.6:5017/api/movies", {
       headers: { Authorization: `Bearer ${token}` },
     });
     setMovies(await res.json());
@@ -35,10 +35,10 @@ function Movies() {
   const fetchData = async () => {
     const headers = { Authorization: `Bearer ${token}` };
     const [g, c, d, a] = await Promise.all([
-      fetch("http://localhost:5017/api/genres", { headers }).then((r) => r.json()),
-      fetch("http://localhost:5017/api/countries", { headers }).then((r) => r.json()),
-      fetch("http://localhost:5017/api/directors", { headers }).then((r) => r.json()),
-      fetch("http://localhost:5017/api/actors", { headers }).then((r) => r.json()),
+      fetch("http://149.102.142.6:5017/api/genres", { headers }).then((r) => r.json()),
+      fetch("http://149.102.142.6:5017/api/countries", { headers }).then((r) => r.json()),
+      fetch("http://149.102.142.6:5017/api/directors", { headers }).then((r) => r.json()),
+      fetch("http://149.102.142.6:5017/api/actors", { headers }).then((r) => r.json()),
     ]);
     setGenres(g);
     setCountries(c);
@@ -62,8 +62,8 @@ function Movies() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isEditing
-      ? `http://localhost:5017/api/movies/${form.id}`
-      : "http://localhost:5017/api/movies";
+      ? `http://149.102.142.6:5017/api/movies/${form.id}`
+      : "http://149.102.142.6:5017/api/movies";
     const method = isEditing ? "PUT" : "POST";
 
     const payload = {
@@ -106,7 +106,7 @@ function Movies() {
 
   const handleDelete = async (id) => {
     if (!confirm("¿Eliminar esta película?")) return;
-    await fetch(`http://localhost:5017/api/movies/${id}`, {
+    await fetch(`http://149.102.142.6:5017/api/movies/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

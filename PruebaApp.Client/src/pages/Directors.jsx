@@ -10,7 +10,7 @@ function Directors() {
 
   // Obtener directores
   const fetchDirectors = async () => {
-    const res = await fetch("http://localhost:5017/api/directors", {
+    const res = await fetch("http://149.102.142.6:5017/api/directors", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -19,7 +19,7 @@ function Directors() {
 
   // Obtener países (para el select)
   const fetchCountries = async () => {
-    const res = await fetch("http://localhost:5017/api/countries", {
+    const res = await fetch("http://149.102.142.6:5017/api/countries", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -44,8 +44,8 @@ const handleChange = (e) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isEditing
-      ? `http://localhost:5017/api/directors/${form.id}`
-      : "http://localhost:5017/api/directors";
+      ? `http://149.102.142.6:5017/api/directors/${form.id}`
+      : "http://149.102.142.6:5017/api/directors";
 
     const method = isEditing ? "PUT" : "POST";
 
@@ -72,7 +72,7 @@ const handleChange = (e) => {
 
   const handleDelete = async (id) => {
     if (!confirm("¿Eliminar este director?")) return;
-    await fetch(`http://localhost:5017/api/directors/${id}`, {
+    await fetch(`http://149.102.142.6:5017/api/directors/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
