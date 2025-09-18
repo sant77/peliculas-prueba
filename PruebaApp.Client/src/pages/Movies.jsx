@@ -99,7 +99,7 @@ function Movies() {
       genreId: movie.genreId,
       countryId: movie.countryId,
       directorId: movie.directorId,
-      actorIds: movie.actors.map((a) => a.id.toString()),
+      actorIds: movie.actorIds.map((id) => id.toString()),
     });
     setIsEditing(true);
   };

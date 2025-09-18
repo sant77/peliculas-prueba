@@ -2,16 +2,19 @@ function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-3/4 max-w-3xl relative">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+      <div className="relative bg-white rounded-xl shadow-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        
         {/* Botón cerrar */}
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-600 hover:text-black text-lg"
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold"
         >
-          ✖
+          ×
         </button>
-        {children}
+
+        {/* Contenido dinámico */}
+        <div className="space-y-4">{children}</div>
       </div>
     </div>
   );
