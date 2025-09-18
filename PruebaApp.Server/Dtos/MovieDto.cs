@@ -6,6 +6,7 @@ namespace PruebaApp.Server.Dtos
         public string Title { get; set; } = "";
         public string Review { get; set; } = "";
         public string CoverImageUrl { get; set; } = "";
+        public string TrailerCode { get; set; } = "";
 
         public int GenreId { get; set; }
         public int CountryId { get; set; }
@@ -22,6 +23,7 @@ namespace PruebaApp.Server.Dtos
         public string Title { get; set; } = "";
         public string Review { get; set; } = "";
         public string CoverImageUrl { get; set; } = "";
+        public string TrailerCode { get; set; } = "";
 
         public int GenreId { get; set; }
         public int CountryId { get; set; }
@@ -37,11 +39,13 @@ namespace PruebaApp.Server.Dtos
         public string Title { get; set; } = "";
         public string Review { get; set; } = "";
         public string CoverImageUrl { get; set; } = "";
+        public string TrailerCode { get; set; } = "";
 
         public string GenreName { get; set; } = "";
         public string CountryName { get; set; } = "";
         public string DirectorName { get; set; } = "";
 
         public List<string> ActorNames { get; set; } = new();
+        public List<int> ActorIds { get; set; } = new(); // 👈 Para actualizar desde el front
     }
 }

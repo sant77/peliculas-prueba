@@ -1,23 +1,23 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-function Directors() {
+function Actors() {
   const { token } = useContext(AuthContext);
-  const [directors, setDirectors] = useState([]);
-  const [form, setForm] = useState({ id: 0, firstName: "", lastName: "", countryId: "" });
+  const [actors, setActors] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [form, setForm] = useState({ id: 0, firstName: "", lastName: "", countryId: "" });
   const [isEditing, setIsEditing] = useState(false);
 
-  // Obtener directores
-  const fetchDirectors = async () => {
-    const res = await fetch("http://localhost:5017/api/directors", {
+  // Obtener actores
+  const fetchActors = async () => {
+    const res = await fetch("http://localhost:5017/api/actors", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
-    setDirectors(data);
+    setActors(data);
   };
 
-  // Obtener países (para el select)
+  // Obtener países
   const fetchCountries = async () => {
     const res = await fetch("http://localhost:5017/api/countries", {
       headers: { Authorization: `Bearer ${token}` },
@@ -27,26 +27,18 @@ function Directors() {
   };
 
   useEffect(() => {
-    fetchDirectors();
+    fetchActors();
     fetchCountries();
   }, []);
 
   // Manejo de formulario
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setForm({
-    ...form,
-    [name]: name === "countryId" ? parseInt(value) || "" : value
-  });
-};
-
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isEditing
-      ? `http://localhost:5017/api/directors/${form.id}`
-      : "http://localhost:5017/api/directors";
-
+      ? `http://localhost:5017/api/actors/${form.id}`
+      : "http://localhost:5017/api/actors";
     const method = isEditing ? "PUT" : "POST";
 
     const res = await fetch(url, {
@@ -59,29 +51,29 @@ const handleChange = (e) => {
     });
 
     if (res.ok) {
-      fetchDirectors();
+      fetchActors();
       setForm({ id: 0, firstName: "", lastName: "", countryId: "" });
       setIsEditing(false);
     }
   };
 
-  const handleEdit = (director) => {
-    setForm(director);
+  const handleEdit = (actor) => {
+    setForm(actor);
     setIsEditing(true);
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("¿Eliminar este director?")) return;
-    await fetch(`http://localhost:5017/api/directors/${id}`, {
+    if (!confirm("¿Eliminar este actor?")) return;
+    await fetch(`http://localhost:5017/api/actors/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
-    fetchDirectors();
+    fetchActors();
   };
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Directores</h1>
+      <h1 className="text-2xl font-bold mb-4">Actores</h1>
 
       {/* Formulario */}
       <form
@@ -115,9 +107,7 @@ const handleChange = (e) => {
         >
           <option value="">-- País --</option>
           {countries.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
+            <option key={c.id} value={c.id}>{c.name}</option>
           ))}
         </select>
         <button
@@ -140,21 +130,21 @@ const handleChange = (e) => {
           </tr>
         </thead>
         <tbody>
-          {directors.map((d) => (
-            <tr key={d.id} className="text-center">
-              <td className="p-2 border">{d.id}</td>
-              <td className="p-2 border">{d.firstName}</td>
-              <td className="p-2 border">{d.lastName}</td>
-              <td className="p-2 border">{d.countryName}</td>
+          {actors.map((a) => (
+            <tr key={a.id} className="text-center">
+              <td className="p-2 border">{a.id}</td>
+              <td className="p-2 border">{a.firstName}</td>
+              <td className="p-2 border">{a.lastName}</td>
+              <td className="p-2 border">{a.countryName}</td>
               <td className="p-2 border flex justify-center gap-2">
                 <button
-                  onClick={() => handleEdit(d)}
+                  onClick={() => handleEdit(a)}
                   className="bg-yellow-400 px-3 py-1 rounded hover:bg-yellow-500"
                 >
                   Editar
                 </button>
                 <button
-                  onClick={() => handleDelete(d.id)}
+                  onClick={() => handleDelete(a.id)}
                   className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                 >
                   Eliminar
@@ -168,4 +158,4 @@ const handleChange = (e) => {
   );
 }
 
-export default Directors;
+export default Actors;

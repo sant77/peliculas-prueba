@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PruebaApp.Server.Data;
 using PruebaApp.Server.Models;
+using PruebaApp.Server.Dtos;
 
 namespace PruebaApp.Server.Controllers
 {
@@ -16,16 +17,39 @@ namespace PruebaApp.Server.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Actor>>> GetActors()
+       [HttpGet]
+        public async Task<ActionResult<IEnumerable<ActorDto>>> GetActors()
         {
-            return await _context.Actors.Include(a => a.Country).ToListAsync();
+            var actors = await _context.Actors
+                .Include(a => a.Country)
+                .Include(a => a.Movies)
+                .Select(a => new ActorDto
+                {
+                    Id = a.Id,
+                    FirstName = a.FirstName,
+                    LastName = a.LastName,
+                    CountryName = a.Country.Name,
+                    Movies = a.Movies.Select(m => m.Title).ToList()
+                })
+                .ToListAsync();
+
+            return actors;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Actor>> GetActor(int id)
+        public async Task<ActionResult<ActorDto>> GetActor(int id)
         {
-            var actor = await _context.Actors.Include(a => a.Country)
+            var actor = await _context.Actors
+                .Include(a => a.Country)
+                .Include(a => a.Movies)
+                .Select(a => new ActorDto
+                {
+                    Id = a.Id,
+                    FirstName = a.FirstName,
+                    LastName = a.LastName,
+                    CountryName = a.Country.Name,
+                    Movies = a.Movies.Select(m => m.Title).ToList()
+                })
                 .FirstOrDefaultAsync(a => a.Id == id);
 
             if (actor == null) return NotFound();
@@ -33,30 +57,61 @@ namespace PruebaApp.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Actor>> CreateActor(Actor actor)
+        public async Task<ActionResult<ActorDto>> CreateActor(CreateActorDto actorDtoActorDto)
         {
+            var actor = new Actor
+            {
+                FirstName = actorDtoActorDto.FirstName,
+                LastName = actorDtoActorDto.LastName,
+                CountryId = actorDtoActorDto.CountryId
+            };
+
+            if (actorDtoActorDto.MovieIds != null && actorDtoActorDto.MovieIds.Any())
+            {
+                actor.Movies = await _context.Movies
+                    .Where(m => actorDtoActorDto.MovieIds.Contains(m.Id))
+                    .ToListAsync();
+            }
+
             _context.Actors.Add(actor);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetActor), new { id = actor.Id }, actor);
+
+            var result = new ActorDto
+            {
+                Id = actor.Id,
+                FirstName = actor.FirstName,
+                LastName = actor.LastName,
+                CountryName = (await _context.Countries.FindAsync(actor.CountryId))?.Name ?? "",
+                Movies = actor.Movies.Select(m => m.Title).ToList()
+            };
+
+            return CreatedAtAction(nameof(GetActor), new { id = actor.Id }, result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateActor(int id, Actor actor)
+        public async Task<IActionResult> UpdateActor(int id, UpdateActorDto actorDtoActorDto)
         {
-            if (id != actor.Id) return BadRequest();
-            _context.Entry(actor).State = EntityState.Modified;
+            var actor = await _context.Actors
+                .Include(a => a.Movies)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            if (actor == null) return NotFound();
+
+            actor.FirstName = actorDtoActorDto.FirstName;
+            actor.LastName = actorDtoActorDto.LastName;
+            actor.CountryId = actorDtoActorDto.CountryId;
+
+            if (actorDtoActorDto.MovieIds != null)
+            {
+                // Reemplazar las películas asociadas
+                actor.Movies = await _context.Movies
+                    .Where(m => actorDtoActorDto.MovieIds.Contains(m.Id))
+                    .ToListAsync();
+            }
+
             await _context.SaveChangesAsync();
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActor(int id)
-        {
-            var actor = await _context.Actors.FindAsync(id);
-            if (actor == null) return NotFound();
-            _context.Actors.Remove(actor);
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
     }
 }

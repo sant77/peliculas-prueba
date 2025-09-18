@@ -5,6 +5,8 @@ import Directors from "./pages/Directors";
 import Genres from "./pages/Genres";
 import Countries from "./pages/Countries";
 import MainLayout from "./layouts/MainLayout";
+import Movies from "./pages/Movies";
+import Actors from "./pages/Actors";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path="/directors" element={<Directors />} />
           <Route path="/genres" element={<Genres />} />
           <Route path="/countries" element={<Countries />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/actors" element={<Actors />} />
         </Routes>
       </MainLayout>
     </BrowserRouter>

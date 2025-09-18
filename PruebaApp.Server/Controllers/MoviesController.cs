@@ -34,10 +34,12 @@ namespace PruebaApp.Server.Controllers
                 Title = m.Title,
                 Review = m.Review,
                 CoverImageUrl = m.CoverImageUrl,
+                TrailerCode = m.TrailerCode, // 👈 aquí
                 GenreName = m.Genre.Name,
                 CountryName = m.Country.Name,
                 DirectorName = $"{m.Director.FirstName} {m.Director.LastName}",
-                ActorNames = m.Actors.Select(a => $"{a.FirstName} {a.LastName}").ToList()
+                ActorNames = m.Actors.Select(a => $"{a.FirstName} {a.LastName}").ToList(),
+                ActorIds = m.Actors.Select(a => a.Id).ToList() // 👈 aquí
             }).ToList();
         }
 
@@ -56,14 +58,16 @@ namespace PruebaApp.Server.Controllers
 
             return new MovieReadDto
             {
-                Id = movie.Id,
-                Title = movie.Title,
-                Review = movie.Review,
-                CoverImageUrl = movie.CoverImageUrl,
-                GenreName = movie.Genre.Name,
-                CountryName = movie.Country.Name,
-                DirectorName = $"{movie.Director.FirstName} {movie.Director.LastName}",
-                ActorNames = movie.Actors.Select(a => $"{a.FirstName} {a.LastName}").ToList()
+            Id = movie.Id,
+            Title = movie.Title,
+            Review = movie.Review,
+            CoverImageUrl = movie.CoverImageUrl,
+            TrailerCode = movie.TrailerCode, // 👈 aquí
+            GenreName = movie.Genre.Name,
+            CountryName = movie.Country.Name,
+            DirectorName = $"{movie.Director.FirstName} {movie.Director.LastName}",
+            ActorNames = movie.Actors.Select(a => $"{a.FirstName} {a.LastName}").ToList(),
+            ActorIds = movie.Actors.Select(a => a.Id).ToList() // 👈 aquí
             };
         }
 
@@ -76,6 +80,7 @@ namespace PruebaApp.Server.Controllers
                 Title = dto.Title,
                 Review = dto.Review,
                 CoverImageUrl = dto.CoverImageUrl,
+                TrailerCode = dto.TrailerCode,
                 GenreId = dto.GenreId,
                 CountryId = dto.CountryId,
                 DirectorId = dto.DirectorId
@@ -107,6 +112,7 @@ namespace PruebaApp.Server.Controllers
             movie.Title = dto.Title;
             movie.Review = dto.Review;
             movie.CoverImageUrl = dto.CoverImageUrl;
+            movie.TrailerCode = dto.TrailerCode;
             movie.GenreId = dto.GenreId;
             movie.CountryId = dto.CountryId;
             movie.DirectorId = dto.DirectorId;
