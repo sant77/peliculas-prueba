@@ -15,7 +15,7 @@ La arquitectura está dockerizada con docker-compose para simplificar el desplie
 
 - Contenedores: Docker + Docker Compose
 
-
+```bash
 .
 ├── PruebaApp.Server/        # Backend (API .NET 8)
 │   ├── Controllers/         # Controladores REST
@@ -32,7 +32,7 @@ La arquitectura está dockerizada con docker-compose para simplificar el desplie
 │
 ├── docker-compose.yml       # Orquestación de servicios
 └── README.md
-
+```
 
 # 🐳 Ejecutar con Docker
 
