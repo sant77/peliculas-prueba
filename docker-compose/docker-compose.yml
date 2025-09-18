@@ -1,6 +1,5 @@
 version: '3.8'
 services:
-
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver_db
@@ -15,8 +14,34 @@ services:
     networks:
       - app-network
 
+  backend:
+    
+    build: ../PruebaApp.Server
+    container_name: prueba_backend
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=my_database;User Id=SA;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+    ports:
+      - "5017:5000"
+    depends_on:
+      - sqlserver
+    networks:
+      - app-network
+
+  frontend:
+
+    build: ../PruebaApp.Client
+    container_name: prueba_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
 volumes:
   sqlserver_data:
+
 networks:
   app-network:
     driver: bridge
